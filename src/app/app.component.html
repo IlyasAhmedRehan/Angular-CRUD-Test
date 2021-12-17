@@ -1,0 +1,166 @@
+<div class="container">
+  <div class="">
+    <!-- nav start  -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light w-100 mt-3 mb-5">
+      <a class="navbar-brand" href="#">Angular Test</a>
+      <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+        <!-- search bar  -->
+        <form class="form-inline my-2 my-lg-0">
+          <input [(ngModel)]="searchTerm" class="form-control mr-sm-2" type="search" placeholder="Search"
+            name="searchTerm" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" (click)="search()" type="button">Search</button>
+        </form>
+      </div>
+    </nav>
+    <!-- nav end here -->
+
+    <div class="users-table">
+        <h2>Users</h2>
+        <div class="table-responsive">
+    <!-- users table starts  -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width:20%;" scope="col" >#</th>
+          <th style="width:20%;" scope="col">First</th>
+          <th style="width:20%;" scope="col">Last</th>
+          <th style="width:20%;" scope="col">Role</th>
+          <th style="width:20%;" scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="users != null">
+        <tr *ngFor="let user of users.usersData; let i = index">
+          <th scope="row">{{user.role}}</th>
+          <td>{{user.firstName}}</td>
+          <td>{{user.lastName}}</td>
+          <td>User</td>
+          <td>
+            <span class="btn btn-danger btn-sm" (click)="deleteUser(i)"> delete </span></td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- users table ends here -->
+    
+</div>
+<!-- table-responsive -->
+</div>
+
+<!-- snr users-table -->
+<div class="snrs-table">
+    <h2>Senior Users</h2>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+              <tr>
+                <th style="width:20%;" scope="col" >#</th>
+                <th style="width:20%;" scope="col">First</th>
+                <th style="width:20%;" scope="col">Last</th>
+                <th style="width:20%;" scope="col">Role</th>
+                <th style="width:20%;" scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="users != null">
+              <tr *ngFor="let user of users.snrUsers; let i = index">
+                <td >{{user.role}}</td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>Snr User</td>
+                <td>
+                  <span class="btn btn-danger btn-sm" (click)="deleteSnrUser(i)"> delete </span></td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Snr users table ends here -->
+        </div>
+        <!-- table-responsive -->
+        </div>
+
+        <!-- wfm table starts -->
+<div class="wfm-table">
+    <h2>WFM</h2>
+    <div class="table-responsive">
+    <table class="table mb-5 align-middle" id="wfm-users">
+        <thead>
+            <tr>
+                <th style="width:20%;" scope="col">#</th>
+                <th style="width:20%;" scope="col">First</th>
+                <th style="width:20%;" scope="col">Last</th>
+                <th style="width:20%;" scope="col">Role</th>
+                <th style="width:20%;" scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+              <tr  *ngFor="let user of users.wfm; let i = index" [attr.id]="user.id"> 
+                <td>{{ user.role }}</td>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>WFM</td>
+                <td><button type="button" class="btn btn-outline-danger btn-sm" (click)="deleteWfm(i)">Delete</button>
+                </td>   
+            </tr>    
+      
+        </tbody>
+    </table>
+</div>
+<!-- table-responsive -->
+</div>
+<!-- wfm-table  -->
+<div class="add-user-btn">
+    <!-- add user modal starts -->
+        <button type="button" class="btn btn-primary mb-5" data-toggle="modal" data-target="#addUserModal">
+      Add User
+    </button>
+</div>
+    <!-- Modal -->
+    <div class="modal fade show" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addUserModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- add user form starts  -->
+            <form #addUserForm=ngForm>
+              <div class="form-group">
+                <label for="first-name-input">First Name</label>
+                <input type="text" name="firstName" ngModel class="form-control" class="form-control"
+                  id="first-name-input" placeholder="Mark" aria-describedby="firstNameHelp">
+                <small id="firstNameHelp" class="form-text text-muted">First Name Required.</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Last</label>
+                <input type="text" class="form-control" name="lastName" ngModel id="last-name-input" placeholder="Otto">
+
+              </div>
+              <div class="form-group">
+                <div class="mb-3">
+                  <label for="role-select">Role</label>
+                  <select class="form-select" id="role-select" aria-label="Role select" name="role" ngModel>
+                    <option selected disabled>Select a role</option>
+                    <option value="1">User</option>
+                    <option value="2">Senior User</option>
+                    <option value="3">WFM</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+            <!-- add user form ends here -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" (click)="addUser(addUserForm.value)" data-dismiss="modal">Save
+              changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- add user modal ends here -->
+  </div>
+  <!-- row here -->
+</div>
+<!-- container here -->
